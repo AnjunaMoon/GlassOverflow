@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Schema;
-
-namespace GlassOverflowProblem
+﻿namespace GlassOverflowProblem
 {
     public class LiquidCalculator
     {
@@ -38,7 +30,7 @@ namespace GlassOverflowProblem
         /// </summary>
         /// <param name="totalAmountDelivered"></param>
         /// <param name="position"></param>
-        /// <returns></returns>
+        /// <returns>Genomfluten volym</returns>
         private static double GetAmountDeliverAt(double totalAmountDelivered, Position position)
         {
             if (position.Row == 1)
@@ -57,6 +49,12 @@ namespace GlassOverflowProblem
             return amount;
         }
 
+        /// <summary>
+        /// Returnerar total volym (i antal glas) som totalt tillsatts då överflöde 
+        /// sker vid angiven position
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns>Totalt tillsatt volym</returns>
         private static double GetTotalAmountDeliveredAtBreakpoint(Position position)
         {
             var totalAmountDelivered = 0D;
@@ -70,6 +68,14 @@ namespace GlassOverflowProblem
             return totalAmountDelivered + 0.0001;
         }
 
+        /// <summary>
+        /// Returnerar tid att uppnå överflöde vid angiven position.
+        /// Överflöde uppnås efter en volymenhet har genomflödat. 
+        /// Varje tillsatt volymenhet tar 10 sekunder.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidParametersException"></exception>
         public static double GetTimeToReachBreakpoint(Position position)
         {
             if (position.Row is < 2 or > 50 || position.Column < 1 || position.Column > position.Row)
